@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tony C — Personal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--bg:#0a0a0f;--surface:#12121a;--border:#1e1e2e;--text:#e4e4ed;--muted:#8888a0;--accent:#6366f1;--accent2:#818cf8;--glow:rgba(99,102,241,0.15)}
+html{scroll-behavior:smooth}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.7}
+
+/* Noise texture overlay */
+body::before{content:'';position:fixed;inset:0;background:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");pointer-events:none;z-index:999}
+
+/* Gradient orbs */
+.orb{position:fixed;border-radius:50%;filter:blur(100px);opacity:.12;pointer-events:none;z-index:0}
+.orb-1{width:600px;height:600px;background:var(--accent);top:-200px;right:-150px;animation:float 20s ease-in-out infinite}
+.orb-2{width:400px;height:400px;background:#a855f7;bottom:-100px;left:-100px;animation:float 25s ease-in-out infinite reverse}
+@keyframes float{0%,100%{transform:translate(0,0)}50%{transform:translate(30px,40px)}}
+
+nav{position:fixed;top:0;width:100%;padding:24px 48px;display:flex;justify-content:space-between;align-items:center;z-index:100;backdrop-filter:blur(20px);background:rgba(10,10,15,0.6);border-bottom:1px solid var(--border);transition:all .3s}
+nav .logo{font-family:'Playfair Display',serif;font-size:1.3rem;letter-spacing:1px;color:var(--text)}
+nav .logo span{color:var(--accent)}
+nav ul{list-style:none;display:flex;gap:32px}
+nav a{color:var(--muted);text-decoration:none;font-size:.85rem;font-weight:500;letter-spacing:.5px;text-transform:uppercase;transition:color .3s}
+nav a:hover{color:var(--text)}
+
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;padding:120px 24px 80px;position:relative;z-index:1}
+.hero-label{font-size:.75rem;text-transform:uppercase;letter-spacing:4px;color:var(--accent2);margin-bottom:24px;font-weight:500;animation:fadeUp .8s ease both}
+.hero h1{font-family:'Playfair Display',serif;font-size:clamp(3.5rem,10vw,8rem);font-weight:700;line-height:1;margin-bottom:24px;animation:fadeUp .8s ease .15s both}
+.hero h1 .gradient{background:linear-gradient(135deg,var(--accent2),#a855f7,#ec4899);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero p{font-size:1.15rem;color:var(--muted);max-width:520px;line-height:1.8;margin-bottom:40px;animation:fadeUp .8s ease .3s both}
+.hero-buttons{display:flex;gap:16px;animation:fadeUp .8s ease .45s both;flex-wrap:wrap;justify-content:center}
+
+.btn{display:inline-flex;align-items:center;gap:8px;padding:14px 32px;border-radius:50px;font-size:.9rem;font-weight:600;text-decoration:none;transition:all .35s;cursor:pointer;border:none;font-family:'Inter',sans-serif}
+.btn-primary{background:var(--accent);color:#fff;box-shadow:0 0 30px var(--glow)}
+.btn-primary:hover{background:var(--accent2);transform:translateY(-2px);box-shadow:0 0 50px var(--glow)}
+.btn-outline{background:transparent;color:var(--text);border:1px solid var(--border)}
+.btn-outline:hover{border-color:var(--accent);color:var(--accent2);transform:translateY(-2px)}
+
+.divider{width:60px;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);margin:0 auto}
+
+section{position:relative;z-index:1;padding:100px 24px}
+.section-inner{max-width:800px;margin:0 auto}
+.section-label{font-size:.7rem;text-transform:uppercase;letter-spacing:4px;color:var(--accent2);margin-bottom:12px;font-weight:500}
+.section-title{font-family:'Playfair Display',serif;font-size:2.2rem;margin-bottom:40px}
+
+.bio-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.bio-card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:32px;transition:all .4s}
+.bio-card:hover{border-color:var(--accent);transform:translateY(-4px);box-shadow:0 8px 40px var(--glow)}
+.bio-card h3{font-size:1rem;margin-bottom:8px;font-weight:600}
+.bio-card p{font-size:.9rem;color:var(--muted);line-height:1.7}
+.bio-card .icon{font-size:1.8rem;margin-bottom:16px;display:block}
+
+.about-text{font-size:1.05rem;color:var(--muted);line-height:2;margin-bottom:40px}
+.about-text strong{color:var(--text);font-weight:600}
+
+.contact-section{text-align:center;padding:120px 24px}
+.contact-section p{color:var(--muted);font-size:1.1rem;margin-bottom:32px;max-width:480px;margin-left:auto;margin-right:auto}
+
+footer{text-align:center;padding:40px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:.8rem;position:relative;z-index:1}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:translateY(0)}}
+
+/* Scroll animations */
+.reveal{opacity:0;transform:translateY(40px);transition:all .8s cubic-bezier(.16,1,.3,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  nav{padding:16px 20px}
+  nav ul{gap:20px}
+  .bio-grid{grid-template-columns:1fr}
+  section{padding:60px 20px}
+  .contact-section{padding:80px 20px}
+}
+@media(max-width:480px){
+  nav ul{display:none}
+  .hero h1{font-size:3rem}
+}
+</style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<nav>
+  <div class="logo">TONY<span>.</span>C</div>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#what-i-do">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-label">Welcome to my space</div>
+  <h1>Tony <span class="gradient">C</span></h1>
+  <p>Creative technologist, builder of digital experiences, and lifelong learner exploring the intersection of design and technology.</p>
+  <div class="hero-buttons">
+    <a href="#contact" class="btn btn-primary">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Get in Touch
+    </a>
+    <a href="#about" class="btn btn-outline">Learn More</a>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="about">
+  <div class="section-inner reveal">
+    <div class="section-label">About</div>
+    <h2 class="section-title">A bit about me</h2>
+    <p class="about-text">
+      I'm <strong>Tony C</strong> — a passionate creative with a love for building things that live on the internet. Whether it's crafting clean interfaces, automating workflows, or experimenting with AI, I'm always looking for the next thing to create. I believe great work comes from <strong>curiosity</strong>, <strong>persistence</strong>, and a willingness to keep learning.
+    </p>
+  </div>
+</section>
+
+<section id="what-i-do">
+  <div class="section-inner reveal">
+    <div class="section-label">What I Do</div>
+    <h2 class="section-title">Areas of focus</h2>
+    <div class="bio-grid">
+      <div class="bio-card">
+        <span class="icon">&#x1f3a8;</span>
+        <h3>Creative Direction</h3>
+        <p>Bringing ideas to life with a keen eye for aesthetics, branding, and visual storytelling.</p>
+      </div>
+      <div class="bio-card">
+        <span class="icon">&#x1f4bb;</span>
+        <h3>Web Development</h3>
+        <p>Building modern, responsive websites and applications using the latest technologies.</p>
+      </div>
+      <div class="bio-card">
+        <span class="icon">&#x1f916;</span>
+        <h3>AI & Automation</h3>
+        <p>Leveraging artificial intelligence and automation to create smarter digital solutions.</p>
+      </div>
+      <div class="bio-card">
+        <span class="icon">&#x1f680;</span>
+        <h3>Digital Strategy</h3>
+        <p>Helping brands grow with data-driven thinking and innovative digital experiences.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<section id="contact" class="contact-section">
+  <div class="reveal">
+    <div class="section-label">Contact</div>
+    <h2 class="section-title">Let's connect</h2>
+    <p>Got a project in mind, a question, or just want to say hello? I'd love to hear from you.</p>
+    <a href="mailto:hello@tonyc.co" class="btn btn-primary">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+      Say Hello
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>&copy; 2026 Tony C. All rights reserved.</p>
+</footer>
+
+<script>
+// Scroll reveal
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if(e.isIntersecting) e.target.classList.add('visible') });
+}, { threshold: 0.15 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Smooth nav background on scroll
+window.addEventListener('scroll', () => {
+  document.querySelector('nav').style.background =
+    window.scrollY > 50 ? 'rgba(10,10,15,0.85)' : 'rgba(10,10,15,0.6)';
+});
+</script>
+</body>
+</html>
